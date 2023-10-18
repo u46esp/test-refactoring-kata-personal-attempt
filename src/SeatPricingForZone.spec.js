@@ -5,6 +5,8 @@ import "@testing-library/jest-dom";
 
 import { SeatPricingForZone } from "./SeatPricingForZone";
 
+const formatPrice = (number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(number);
+
 describe('SeatPricingForZone', () => {
   it.each`
   zoneName
@@ -48,7 +50,6 @@ describe('SeatPricingForZone', () => {
         zoneInfo={zoneInfo}
         isCustomerPremiumMember={isCustomerPremiumMember} />)
 
-      const formatPrice = (number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(number);
       expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
 
       if (canSeePremiumPrice) {
