@@ -59,7 +59,7 @@ describe('when customer is not premium member', () => {
       | ${250}       | ${200}
       | ${500}       | ${400}
       | ${800}       | ${600}
-        `("Should displays both premium price and regular price",
+        `("Should displays premium price alongside with crossed-out regular price",
       ({ regularPrice, premiumMemberPrice }) => {
         const zoneInfo = { 
           zoneName: "ZONE_NAME", 
@@ -70,8 +70,8 @@ describe('when customer is not premium member', () => {
           zoneInfo={zoneInfo}
           isCustomerPremiumMember={true} />)
 
-        expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
-        expect(screen.getByText(formatPrice(premiumMemberPrice), { exact: false })).toBeInTheDocument()
+          expect(screen.getByText(formatPrice(premiumMemberPrice), { exact: false })).toBeInTheDocument()
+          expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toHaveClass("full-price-cross-out")
       })
     })
 })
