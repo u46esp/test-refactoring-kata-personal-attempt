@@ -52,29 +52,26 @@ describe('when customer is not premium member', () => {
       expect(screen.queryByText(formatPrice(premiumMemberPrice), { exact: false })).not.toBeInTheDocument()
     })
   })
-  it.each`
-    isCustomerPremiumMember | regularPrice | canSeePremiumPrice | premiumMemberPrice
-    ${true}                 | ${200}       | ${true}            | ${150}
-    ${true}                 | ${250}       | ${true}            | ${200}
-    ${true}                 | ${500}       | ${true}            | ${400}
-    ${true}                 | ${800}       | ${true}            | ${600}
-      `("Given { isCustomerPremiumMember : $isCustomerPremiumMember }, should display its price(s) correctly",
-    ({ isCustomerPremiumMember, regularPrice, canSeePremiumPrice, premiumMemberPrice }) => {
-      const zoneInfo = { 
-        zoneName: "ZONE_NAME", 
-        regularPrice: regularPrice, 
-        premiumMemberPrice: premiumMemberPrice 
-      }
-        render(<SeatPricingForZone
-        zoneInfo={zoneInfo}
-        isCustomerPremiumMember={isCustomerPremiumMember} />)
+  describe('when customer is premium member', () => {
+    it.each`
+      regularPrice   | premiumMemberPrice
+      | ${200}       | ${150}
+      | ${250}       | ${200}
+      | ${500}       | ${400}
+      | ${800}       | ${600}
+        `("Should display its price(s) correctly",
+      ({ regularPrice, premiumMemberPrice }) => {
+        const zoneInfo = { 
+          zoneName: "ZONE_NAME", 
+          regularPrice: regularPrice, 
+          premiumMemberPrice: premiumMemberPrice 
+        }
+          render(<SeatPricingForZone
+          zoneInfo={zoneInfo}
+          isCustomerPremiumMember={true} />)
 
-      expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
-
-      if (canSeePremiumPrice) {
+        expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
         expect(screen.getByText(formatPrice(premiumMemberPrice), { exact: false })).toBeInTheDocument()
-      } else {
-        expect(screen.queryByText(formatPrice(premiumMemberPrice), { exact: false })).not.toBeInTheDocument()
-      }
+      })
     })
 })
