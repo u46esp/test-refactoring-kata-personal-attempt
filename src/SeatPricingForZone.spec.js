@@ -38,9 +38,13 @@ describe('SeatPricingForZone', () => {
     ${true}                 | ${800}       | ${true}            | ${600}
     ${false}                | ${1500}      | ${false}           | ${1200}
       `("Given { isCustomerPremiumMember : $isCustomerPremiumMember }, should display its price(s) correctly",
-    ({ zoneName, isCustomerPremiumMember, regularPrice, canSeePremiumPrice, premiumMemberPrice }) => {
-      const zoneInfo = { zoneName, regularPrice, premiumMemberPrice }
-      render(<SeatPricingForZone
+    ({ isCustomerPremiumMember, regularPrice, canSeePremiumPrice, premiumMemberPrice }) => {
+      const zoneInfo = { 
+        zoneName: "ZONE_NAME", 
+        regularPrice: regularPrice, 
+        premiumMemberPrice: premiumMemberPrice 
+      }
+        render(<SeatPricingForZone
         zoneInfo={zoneInfo}
         isCustomerPremiumMember={isCustomerPremiumMember} />)
 
