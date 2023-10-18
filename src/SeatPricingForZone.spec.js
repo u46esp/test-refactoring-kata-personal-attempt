@@ -28,6 +28,32 @@ describe('SeatPricingForZone', () => {
     expect(screen.getByText(zoneName, { exact: false })).toBeInTheDocument()
 })
 
+it.each`
+  regularPrice | expectedDisplayRegularPrice | premiumMemberPrice | expectedDisplayPremiumPrice
+  ${1}      | ${"1"}                  | ${2}            | ${"2"}
+  ${10}      | ${"10"}                  | ${20}            | ${"20"}
+  ${100}      | ${"100"}                  | ${200}            | ${"200"}
+  ${1500}      | ${"1,500"}                  | ${1200}            | ${"1,200"}
+  ${15000}      | ${"15,000"}                  | ${12000}            | ${"12,000"}
+  ${150000}      | ${"150,000"}                  | ${120000}            | ${"120,000"}
+  ${1500000}      | ${"1,500,000"}                  | ${1200000}            | ${"1,200,000"}
+  `("Format pricing correctly for both regular price and premium price", 
+    ({ regularPrice, expectedDisplayRegularPrice, premiumMemberPrice, expectedDisplayPremiumPrice }) => {
+      const zoneInfo = { 
+        zoneName: "ZONE_NAME", 
+        regularPrice: regularPrice, 
+        premiumMemberPrice: premiumMemberPrice 
+      }
+        render(<SeatPricingForZone
+        zoneInfo={zoneInfo}
+        isCustomerPremiumMember={true} />)
+
+      expect(screen.getByText(expectedDisplayRegularPrice, { exact: false })).toBeInTheDocument()
+      expect(screen.getByText(expectedDisplayPremiumPrice, { exact: false })).toBeInTheDocument()
+    })
+    
+
+
 describe('when customer is not premium member', () => {
   it.each`
     regularPrice | premiumMemberPrice
