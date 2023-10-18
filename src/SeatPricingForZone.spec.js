@@ -51,7 +51,7 @@ describe('when customer is not premium member', () => {
       expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
       expect(screen.queryByText(formatPrice(premiumMemberPrice), { exact: false })).not.toBeInTheDocument()
     })
-})
+  })
   it.each`
     isCustomerPremiumMember | regularPrice | canSeePremiumPrice | premiumMemberPrice
     ${true}                 | ${200}       | ${true}            | ${150}
