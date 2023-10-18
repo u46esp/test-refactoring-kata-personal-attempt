@@ -37,7 +37,7 @@ describe('when customer is not premium member', () => {
     ${800}       | ${600}
     ${1500}      | ${1200}
     ${1500}      | ${1200}
-      `("Should display its price(s) correctly",
+      `("Should only display regular price without showing premium price",
     ({ regularPrice, premiumMemberPrice }) => {
       const zoneInfo = { 
         zoneName: "ZONE_NAME", 
@@ -59,7 +59,7 @@ describe('when customer is not premium member', () => {
       | ${250}       | ${200}
       | ${500}       | ${400}
       | ${800}       | ${600}
-        `("Should display its price(s) correctly",
+        `("Should displays both premium price and regular price",
       ({ regularPrice, premiumMemberPrice }) => {
         const zoneInfo = { 
           zoneName: "ZONE_NAME", 
