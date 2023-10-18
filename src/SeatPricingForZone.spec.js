@@ -7,18 +7,37 @@ import { SeatPricingForZone } from "./SeatPricingForZone";
 
 describe('SeatPricingForZone', () => {
   it.each`
-    zoneName        | isCustomerPremiumMember | regularPrice | canSeePremiumPrice | premiumMemberPrice
-    ${"furthest"}   | ${false}                | ${200}       | ${false}           | ${150}
-    ${"closer"}     | ${false}                | ${250}       | ${false}           | ${200}
-    ${"standing"}   | ${false}                | ${500}       | ${false}           | ${400}
-    ${"frontmost"}  | ${false}                | ${800}       | ${false}           | ${600}
-    ${"hitouch"}    | ${false}                | ${1500}      | ${false}           | ${1200}
-    ${"furthest"}   | ${true}                 | ${200}       | ${true}            | ${150}
-    ${"closer"}     | ${true}                 | ${250}       | ${true}            | ${200}
-    ${"standing"}   | ${true}                 | ${500}       | ${true}            | ${400}
-    ${"frontmost"}  | ${true}                 | ${800}       | ${true}            | ${600}
-    ${"hitouch"}    | ${false}                | ${1500}      | ${false}           | ${1200}
-      `("Given { isCustomerPremiumMember : $isCustomerPremiumMember, zoneName : $zoneName }, should display its name and price(s) correctly",
+  zoneName
+  ${"furthest"}
+  ${"closer"}
+  ${"standing"}
+  ${"frontmost"}
+  ${"hitouch"}
+  `("Renders zone name $zoneName correctly", ({zoneName}) => {
+    const zoneInfo = { 
+      zoneName: zoneName, 
+      regularPrice: 100, 
+      premiumMemberPrice: 200 
+    }
+    render(<SeatPricingForZone
+      zoneInfo={zoneInfo}
+      isCustomerPremiumMember={false} />)
+
+    expect(screen.getByText(zoneName, { exact: false })).toBeInTheDocument()
+})
+  it.each`
+    isCustomerPremiumMember | regularPrice | canSeePremiumPrice | premiumMemberPrice
+    ${false}                | ${200}       | ${false}           | ${150}
+    ${false}                | ${250}       | ${false}           | ${200}
+    ${false}                | ${500}       | ${false}           | ${400}
+    ${false}                | ${800}       | ${false}           | ${600}
+    ${false}                | ${1500}      | ${false}           | ${1200}
+    ${true}                 | ${200}       | ${true}            | ${150}
+    ${true}                 | ${250}       | ${true}            | ${200}
+    ${true}                 | ${500}       | ${true}            | ${400}
+    ${true}                 | ${800}       | ${true}            | ${600}
+    ${false}                | ${1500}      | ${false}           | ${1200}
+      `("Given { isCustomerPremiumMember : $isCustomerPremiumMember }, should display its price(s) correctly",
     ({ zoneName, isCustomerPremiumMember, regularPrice, canSeePremiumPrice, premiumMemberPrice }) => {
       const zoneInfo = { zoneName, regularPrice, premiumMemberPrice }
       render(<SeatPricingForZone
@@ -27,7 +46,6 @@ describe('SeatPricingForZone', () => {
 
       const formatPrice = (number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(number);
       expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
-      expect(screen.getByText(zoneName, { exact: false })).toBeInTheDocument()
 
       if (canSeePremiumPrice) {
         expect(screen.getByText(formatPrice(premiumMemberPrice), { exact: false })).toBeInTheDocument()
