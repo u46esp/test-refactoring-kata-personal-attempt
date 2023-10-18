@@ -29,15 +29,15 @@ describe('SeatPricingForZone', () => {
 })
 
 it.each`
-  regularPrice | expectedDisplayRegularPrice | premiumMemberPrice | expectedDisplayPremiumPrice
-  ${1}      | ${"1"}                  | ${2}            | ${"2"}
-  ${10}      | ${"10"}                  | ${20}            | ${"20"}
-  ${100}      | ${"100"}                  | ${200}            | ${"200"}
-  ${1500}      | ${"1,500"}                  | ${1200}            | ${"1,200"}
-  ${15000}      | ${"15,000"}                  | ${12000}            | ${"12,000"}
-  ${150000}      | ${"150,000"}                  | ${120000}            | ${"120,000"}
-  ${1500000}      | ${"1,500,000"}                  | ${1200000}            | ${"1,200,000"}
-  `("Format pricing correctly for both regular price and premium price", 
+regularPrice | expectedDisplayRegularPrice | premiumMemberPrice | expectedDisplayPremiumPrice
+${1}         | ${"1"}                      | ${2}               | ${"2"}
+${10}        | ${"10"}                     | ${20}              | ${"20"}
+${100}       | ${"100"}                    | ${200}             | ${"200"}
+${1500}      | ${"1,500"}                  | ${1200}            | ${"1,200"}
+${15000}     | ${"15,000"}                 | ${12000}           | ${"12,000"}
+${150000}    | ${"150,000"}                | ${120000}          | ${"120,000"}
+${1500000}   | ${"1,500,000"}              | ${1200000}         | ${"1,200,000"}
+`("Format pricing correctly for both regular price and premium price", 
     ({ regularPrice, expectedDisplayRegularPrice, premiumMemberPrice, expectedDisplayPremiumPrice }) => {
       const zoneInfo = { 
         zoneName: "ZONE_NAME", 
