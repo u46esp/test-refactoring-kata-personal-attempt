@@ -85,7 +85,7 @@ describe('when customer is not premium member', () => {
       | ${250}       | ${200}
       | ${500}       | ${400}
       | ${800}       | ${600}
-        `("Should displays premium price alongside with crossed-out regular price",
+        `("Should displays premium price alongside with crossed-out regular price to show membership benefits",
       ({ regularPrice, premiumMemberPrice }) => {
         const zoneInfo = { 
           zoneName: "ZONE_NAME", 
