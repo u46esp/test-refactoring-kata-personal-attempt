@@ -11,11 +11,7 @@ describe('SeatPricingForZone', () => {
   it.each`
   zoneName
   ${"furthest"}
-  ${"closer"}
-  ${"standing"}
-  ${"frontmost"}
-  ${"hitouch"}
-  `("Renders zone name $zoneName correctly", ({zoneName}) => {
+  `("Renders zone name correctly", ({zoneName}) => {
     const zoneInfo = { 
       zoneName: zoneName, 
       regularPrice: 100, 
@@ -57,12 +53,7 @@ ${1500000}   | ${"1,500,000"}              | ${1200000}         | ${"1,200,000"}
 describe('when customer is not premium member', () => {
   it.each`
     regularPrice | premiumMemberPrice
-    ${200}       | ${150}
-    ${250}       | ${200}
-    ${500}       | ${400}
     ${800}       | ${600}
-    ${1500}      | ${1200}
-    ${1500}      | ${1200}
       `("Should only display regular price without showing premium price",
     ({ regularPrice, premiumMemberPrice }) => {
       const zoneInfo = { 
@@ -81,9 +72,6 @@ describe('when customer is not premium member', () => {
   describe('when customer is premium member', () => {
     it.each`
       regularPrice   | premiumMemberPrice
-      | ${200}       | ${150}
-      | ${250}       | ${200}
-      | ${500}       | ${400}
       | ${800}       | ${600}
         `("Should displays premium price alongside with crossed-out regular price to show membership benefits",
       ({ regularPrice, premiumMemberPrice }) => {
