@@ -5,8 +5,6 @@ import "@testing-library/jest-dom";
 
 import { SeatPricingForZone } from "./SeatPricingForZone";
 
-const formatPrice = (number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(number);
-
 describe('SeatPricingForZone', () => {
   it.each`
   zoneName
@@ -65,8 +63,8 @@ describe('when customer is not premium member', () => {
         zoneInfo={zoneInfo}
         isCustomerPremiumMember={false} />)
 
-      expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
-      expect(screen.queryByText(formatPrice(premiumMemberPrice), { exact: false })).not.toBeInTheDocument()
+      expect(screen.getByText(regularPrice, { exact: false })).toBeInTheDocument()
+      expect(screen.queryByText(premiumMemberPrice, { exact: false })).not.toBeInTheDocument()
     })
   })
   describe('when customer is premium member', () => {
@@ -84,8 +82,8 @@ describe('when customer is not premium member', () => {
           zoneInfo={zoneInfo}
           isCustomerPremiumMember={true} />)
 
-          expect(screen.getByText(formatPrice(premiumMemberPrice), { exact: false })).toBeInTheDocument()
-          expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toHaveClass("full-price-cross-out")
+          expect(screen.getByText(premiumMemberPrice, { exact: false })).toBeInTheDocument()
+          expect(screen.getByText(regularPrice, { exact: false })).toHaveClass("full-price-cross-out")
       })
     })
 })
