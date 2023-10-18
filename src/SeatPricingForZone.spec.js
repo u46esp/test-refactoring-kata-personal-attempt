@@ -27,18 +27,37 @@ describe('SeatPricingForZone', () => {
 
     expect(screen.getByText(zoneName, { exact: false })).toBeInTheDocument()
 })
+
+describe('when customer is not premium member', () => {
+  it.each`
+    regularPrice | premiumMemberPrice
+    ${200}       | ${150}
+    ${250}       | ${200}
+    ${500}       | ${400}
+    ${800}       | ${600}
+    ${1500}      | ${1200}
+    ${1500}      | ${1200}
+      `("Should display its price(s) correctly",
+    ({ regularPrice, premiumMemberPrice }) => {
+      const zoneInfo = { 
+        zoneName: "ZONE_NAME", 
+        regularPrice: regularPrice, 
+        premiumMemberPrice: premiumMemberPrice 
+      }
+        render(<SeatPricingForZone
+        zoneInfo={zoneInfo}
+        isCustomerPremiumMember={false} />)
+
+      expect(screen.getByText(formatPrice(regularPrice), { exact: false })).toBeInTheDocument()
+      expect(screen.queryByText(formatPrice(premiumMemberPrice), { exact: false })).not.toBeInTheDocument()
+    })
+})
   it.each`
     isCustomerPremiumMember | regularPrice | canSeePremiumPrice | premiumMemberPrice
-    ${false}                | ${200}       | ${false}           | ${150}
-    ${false}                | ${250}       | ${false}           | ${200}
-    ${false}                | ${500}       | ${false}           | ${400}
-    ${false}                | ${800}       | ${false}           | ${600}
-    ${false}                | ${1500}      | ${false}           | ${1200}
     ${true}                 | ${200}       | ${true}            | ${150}
     ${true}                 | ${250}       | ${true}            | ${200}
     ${true}                 | ${500}       | ${true}            | ${400}
     ${true}                 | ${800}       | ${true}            | ${600}
-    ${false}                | ${1500}      | ${false}           | ${1200}
       `("Given { isCustomerPremiumMember : $isCustomerPremiumMember }, should display its price(s) correctly",
     ({ isCustomerPremiumMember, regularPrice, canSeePremiumPrice, premiumMemberPrice }) => {
       const zoneInfo = { 
